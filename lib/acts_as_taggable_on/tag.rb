@@ -26,7 +26,7 @@ module ActsAsTaggableOn
       if ActsAsTaggableOn.strict_case_match
         where(["name = #{binary}?", as_8bit_ascii(name)])
       else
-        where(['LOWER(name) = LOWER(?)', as_8bit_ascii(unicode_downcase(name))])
+        where(['name = LOWER(?)', as_8bit_ascii(unicode_downcase(name))])
       end
     end
 
@@ -131,7 +131,7 @@ module ActsAsTaggableOn
         if ActsAsTaggableOn.strict_case_match
           sanitize_sql(["name = #{binary}?", as_8bit_ascii(tag)])
         else
-          sanitize_sql(['LOWER(name) = LOWER(?)', as_8bit_ascii(unicode_downcase(tag))])
+          sanitize_sql(['name = LOWER(?)', as_8bit_ascii(unicode_downcase(tag))])
         end
       end
     end
