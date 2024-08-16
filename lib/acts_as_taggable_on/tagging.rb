@@ -19,9 +19,17 @@ module ActsAsTaggableOn
 
     validates_uniqueness_of :tag_id, scope: [:taggable_type, :taggable_id, :context, :tagger_id, :tagger_type]
 
+    before_save :set_vendor
     after_destroy :remove_unused_tags
 
     private
+
+    def set_vendor
+        if self.has_attribute?(:taggings_vendor_id) && taggable.has_attribute?(:vendor_id)
+            self.taggings_vendor_id = taggable.vendor_id
+        end
+    end
+
 
     def remove_unused_tags
       if ActsAsTaggableOn.remove_unused_tags
